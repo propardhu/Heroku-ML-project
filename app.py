@@ -15,6 +15,8 @@ def home():
 @app.route('/liverdis',methods=['post'])
 def liver():
 	xt=[[float(x) for x in request.form.values()]]
+	print(xt)
+	predic=model.predict(xt)
 	collecion.insert_one({
 		"age": str(xt[0][0]),
 		"gender": str(xt[0][1]),
@@ -26,9 +28,8 @@ def liver():
 		"Total_Protiens": str(xt[0][7]),
 		"Albumin": str(xt[0][8]),
 		"Albumin_and_Globulin_Ratio": str(xt[0][9]),
-	})
-	print(xt)
-	predic=model.predict(xt)
+		"Resut":str(predic[0]),
+		})
 	print(predic)
 	if(predic[0]):
 		return render_template('liverdisease.html')
